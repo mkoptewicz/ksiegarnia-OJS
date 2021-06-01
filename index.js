@@ -9,12 +9,12 @@ const maxListLength = 5;
 
 function renderSpinner(parentEl) {
   const markup = `
-  <div class="spinner">
-    <svg>
-      <use href="./icons.svg#icon-loader"></use>
-    </svg>
-  </div>`;
-  parentEl.innerHTML = markup;
+    <div class="cssload-container">
+      <div class="cssload-zenith"></div>
+    </div>`;
+  parentEl.innerHTML = '';
+  parentEl.insertAdjacentHTML('afterbegin', markup);
+  console.log(parentEl);
 }
 
 async function fetchBooks(e) {
@@ -36,6 +36,10 @@ async function fetchBooks(e) {
     displayBooks(data.slice(0, maxListLength));
   } catch (err) {
     console.log(err.message);
+    resultsList.innerHTML =
+      "<p>We couldn't get you the books you were looking for. Please try again later</p>";
+  } finally {
+    inputFieled.value = '';
   }
 }
 function displayBooks(data) {
@@ -49,7 +53,7 @@ function displayBooks(data) {
     .join('');
 
   if (data.length === 0) {
-    markup = `<p>Sorry. Looks like we can't find the book you ara looking for</p>`;
+    markup = `<p>Sorry. Looks like we can't find the book you are looking for...</p>`;
   }
   resultsList.innerHTML = markup;
 }
